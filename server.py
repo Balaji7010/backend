@@ -1,6 +1,7 @@
 from flask import Flask, jsonify, request
 from flask_cors import CORS
 import logging
+import os  # Import os to get environment variables
 
 app = Flask(__name__)
 CORS(app)  # Allow frontend requests from different origins
@@ -44,6 +45,6 @@ def update_status():
 def health_check():
     return jsonify({"status": "running"}), 200
 
-
 if __name__ == '__main__':
-    app.run(debug=True, host="0.0.0.0", port=5000)
+    port = int(os.environ.get("PORT", 5000))  # Get Railway's assigned port or use 5000
+    app.run(debug=True, host="0.0.0.0", port=port)
